@@ -1,27 +1,26 @@
-
-#  version of Ubuntu 
+# Use the latest version of Ubuntu as the base image
 FROM ubuntu:latest
 
-# Update  packages
+# Update the list of available packages
 RUN apt-get update
 
-#installed packages
+# Upgrade the installed packages
 RUN apt-get upgrade -y
 
-# Install Python3 
+# Install Python3 and pip3
 RUN apt-get install -y python3 python3-pip
 
-# Remove EXTERNALLY-MANAGED
+# Remove EXTERNALLY-MANAGED file if it exists
 RUN rm /usr/lib/python*/EXTERNALLY-MANAGED || true
 
-# Install Flask 
+# Install Flask using pip3
 RUN pip3 install flask
 
-# Set /app 
+# Set /app as the working directory
 WORKDIR /app
 
-# Copy 
+# Copy the api.py file to /app directory inside the Docker image
 COPY ./api.py /app/api.py
 
-# run the Flask 
+# Command to run the Flask application
 CMD ["python3", "api.py"]
